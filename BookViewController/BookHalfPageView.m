@@ -3,7 +3,7 @@
 //  BookViewController
 //
 //  Created by Esteban on 4/14/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 EstebanBouza. All rights reserved.
 //
 
 #import "BookHalfPageView.h"
@@ -32,26 +32,35 @@ typedef enum {
 
 @property (nonatomic, retain) NSArray *views;
 
+// Hold a reference to the previous, current and next view
 @property (nonatomic, retain) UIView *prevView;
 @property (nonatomic, retain) UIView *currView;
 @property (nonatomic, retain) UIView *nextView;
 
+// Two image views used during the page flip
 @property (nonatomic, retain) UIImageView *currLeftImageView;
 @property (nonatomic, retain) UIImageView *currRightImageView;
 
+// Screenshots of the images
 @property (nonatomic, retain) UIImage *currRightImage;
 @property (nonatomic, retain) UIImage *currLeftImage;
 @property (nonatomic, retain) UIImage *nextImage;
 
+// Starting point of a touch event
 @property (nonatomic, assign) CGFloat xstart;
 
+// Current page in the book view
 @property (nonatomic, assign) NSInteger currPage;
 
+// Next page to show during a page flip
 @property (nonatomic, assign) t_pageToShow nextPageToShow;
 
+// Reference to the last angle
 @property (nonatomic, assign) CGFloat lastAngle;
 
+// Current page being moved
 @property (nonatomic, assign) t_pageToMove pageToMove;
+
 @end
 
 
@@ -105,6 +114,8 @@ typedef enum {
 
 #pragma mark - utils
 
+// Returns an UIImage from a view.
+// leftHalft indecates whether the image to take should be the left or right half.
 - (UIImage *)imageForView:(UIView *)view leftHalf:(BOOL)leftHalf rotated:(BOOL)rotated {
     CGFloat scale = 1.0;
     UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, scale);
@@ -151,6 +162,8 @@ typedef enum {
     layer.transform = transform;
 }
 
+
+// Returns a constrained angle between 0 and PI depending on the page to move
 - (CGFloat)constrainedAngle:(CGFloat)angle pageToMove:(t_pageToMove)pageToMove {
     switch (pageToMove) {
         case kPageRight:
@@ -183,13 +196,17 @@ typedef enum {
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
+    // Store X coordinate of starting event
     self.xstart = [touch locationInView:self].x;
     
+    // Decide which page to move based on the starting event.
     self.pageToMove = self.xstart < CGRectGetWidth(self.frame)/2 ? kPageLeft : kPageRight;
     
+    // Store two half screenshots of the current view
     self.currLeftImage = [self imageForView:self.currView leftHalf:YES rotated:NO];
     self.currRightImage = [self imageForView:self.currView leftHalf:NO rotated:NO];
     
+    // Create two image views based on the previous 
     self.currLeftImageView = [[[UIImageView alloc] initWithImage:self.currLeftImage] autorelease];
     self.currRightImageView = [[[UIImageView alloc] initWithImage:self.currRightImage] autorelease];
     self.currLeftImageView.frame = kRectLeftImage;
@@ -206,12 +223,14 @@ typedef enum {
             
             [self.superview addSubview:imageView];
             self.nextImage = image;
-            //            self.nextImage = [UIImage imageNamed:@"img5"];
             [self insertSubview:self.prevView belowSubview:self.currView];
             break;
             
         case kPageRight:
+            // Store the next image to show in the other side of the current page
             self.nextImage = [self imageForView:self.nextView leftHalf:YES rotated:YES];
+            
+            // Insert the view below the current view
             [self insertSubview:self.nextView belowSubview:self.currView];
             break;
             
@@ -219,7 +238,7 @@ typedef enum {
             break;
     }
     
-    
+    // Remove the current view and replace it by two half images we created before.
     [self.currView removeFromSuperview];
     [self addSubview:self.currLeftImageView];
     [self addSubview:self.currRightImageView];
@@ -230,22 +249,36 @@ typedef enum {
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
+    
+    // Calculate the touch movement based on the start point
     CGFloat xpoint = [touch locationInView:self].x - self.xstart;
     
+    // Get the angle based on the movement
     CGFloat angle = [self constrainedAngle:xpoint / CGRectGetWidth(self.frame) * M_PI pageToMove:self.pageToMove];
     
-    UIView *viewToRotate;
+    UIView *viewToRotate = nil;
     
     // Moving to next page
     if (self.pageToMove == kPageRight) {
+        // if we are moving the right page, set the right image view as the one to rotate
         viewToRotate = self.currRightImageView;
+        
+        // The first half of the movement will show the current page.
+        // After the first half, the next page must be shown.
         if (angle < -M_PI_2 && self.nextPageToShow != kNextPage) {
+
+            // Since the next page is already being shown, if the user stops moving touches
+            // the next page must be shown in the animation.
             self.nextPageToShow = kNextPage;
             self.currRightImageView.image = self.nextImage;        
         } else if (angle >= -M_PI_2 && self.nextPageToShow != kCurrentPage) {
+            
+            // Since the angle is to small and the current page is being show, if the user
+            // stops moving touches the current page must be shown in the animation.
             self.nextPageToShow = kCurrentPage;
             self.currRightImageView.image = self.currRightImage;
         }
+        
         // Moving to previous page
     } else if (self.pageToMove == kPageLeft) {
         viewToRotate = self.currLeftImageView;
@@ -265,12 +298,15 @@ typedef enum {
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     CGFloat finalAngle;
-    CALayer *layer;
+    CALayer *layer = nil;
+    
     if (self.nextPageToShow == kNextPage) {
+        // Calculate the final angle for the next page
         finalAngle = (self.lastAngle < -M_PI_2) ? -M_PI : 0.0f;
         self.currRightImageView.frame = CGRectMake(CGRectGetWidth(self.frame)/4, 0, CGRectGetWidth(kRectRightImage), CGRectGetHeight(kRectRightImage));
         layer = self.currRightImageView.layer;
         layer.anchorPoint = CGPointMake(0.0f, 0.5f);
+        
     } else if (self.nextPageToShow == kPreviousPage) {
         finalAngle = (self.lastAngle > M_PI_2) ? M_PI : 0.0f;
         self.currLeftImageView.frame = CGRectMake(CGRectGetWidth(self.frame)/4, 0, CGRectGetWidth(kRectRightImage), CGRectGetHeight(kRectRightImage));
@@ -298,18 +334,31 @@ typedef enum {
     layer.transform = transformTo;    
 }
 
+
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    // Restart the last angle
     self.lastAngle = 0.0f;
+    
+    // Remove the animating image views. Will be replaced for real views
+    // in the following lines
     [self.currRightImageView removeFromSuperview];
     [self.currLeftImageView removeFromSuperview];
     
+    
     switch (self.nextPageToShow) {
         case kNextPage:
+            // Adjust current page
             self.currPage++;
+            
+            // Don't need to store the previous view any more since it's not going to be showing
             [self.prevView removeFromSuperview];
+            
+            // Adjust previous, current and next view
             self.prevView = self.currView;
             self.currView = self.nextView;
             self.nextView = (self.currPage + 1 < self.views.count) ? [self.views objectAtIndex:self.currPage + 1] : nil;
+            
+            // Add next view below the current view
             [self addSubview:self.nextView];
             [self addSubview:self.currView];
             break;
@@ -332,7 +381,7 @@ typedef enum {
             break;
     }
     
-    
+    // Restart the next page to shown and the page to move
     self.nextPageToShow = kCurrentPage;
     self.pageToMove = kPageNone;
     

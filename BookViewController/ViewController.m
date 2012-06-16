@@ -3,7 +3,7 @@
 //  BookViewController
 //
 //  Created by Esteban on 3/29/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 EstebanBouza. All rights reserved.
 //
 
 #import "ViewController.h"
