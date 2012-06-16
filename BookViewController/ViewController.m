@@ -14,7 +14,6 @@
 #define kViewWidth 400
 #define kViewHeight 250
 
-
 @interface ViewController ()
 
 @property (nonatomic, retain) BookView *bookView;
