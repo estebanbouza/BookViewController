@@ -266,7 +266,7 @@ typedef enum {
         // The first half of the movement will show the current page.
         // After the first half, the next page must be shown.
         if (angle < -M_PI_2 && self.nextPageToShow != kNextPage) {
-
+            
             // Since the next page is already being shown, if the user stops moving touches
             // the next page must be shown in the animation.
             self.nextPageToShow = kNextPage;
@@ -303,25 +303,21 @@ typedef enum {
     // Depending on the combination of page to move (left - right) and whether
     // the animation should move forward or back to the next of previous page
     
-    if (self.nextPageToShow == kNextPage) {
+    if (self.nextPageToShow == kNextPage ||
+        (self.nextPageToShow == kCurrentPage && self.pageToMove == kPageRight)) {
         // Moving to next page AND 
         finalAngle = (self.lastAngle < -M_PI_2) ? -M_PI : 0.0f;
         self.currRightImageView.frame = CGRectMake(CGRectGetWidth(self.frame)/4, 0, CGRectGetWidth(kRectRightImage), CGRectGetHeight(kRectRightImage));
         layer = self.currRightImageView.layer;
         layer.anchorPoint = CGPointMake(0.0f, 0.5f);
         
-    } else if (self.nextPageToShow == kPreviousPage) {
+    } else if (self.nextPageToShow == kPreviousPage || 
+               (self.nextPageToShow == kCurrentPage && self.pageToMove == kPageLeft)) {
         finalAngle = (self.lastAngle > M_PI_2) ? M_PI : 0.0f;
         self.currLeftImageView.frame = CGRectMake(CGRectGetWidth(self.frame)/4, 0, CGRectGetWidth(kRectRightImage), CGRectGetHeight(kRectRightImage));
         layer = self.currLeftImageView.layer;
         layer.anchorPoint = CGPointMake(1.0f, 0.5f);
-
-    } else if (self.nextPageToShow == kCurrentPage) {
-        finalAngle = (self.lastAngle < -M_PI_2) ? -M_PI : 0.0f;
-        self.currRightImageView.frame = CGRectMake(CGRectGetWidth(self.frame)/4, 0, CGRectGetWidth(kRectRightImage), CGRectGetHeight(kRectRightImage));
-        layer = self.currRightImageView.layer;
-        layer.anchorPoint = CGPointMake(0.0f, 0.5f);
-    }
+    } 
     
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
     CATransform3D transformTo = CATransform3DIdentity;
