@@ -300,8 +300,11 @@ typedef enum {
     CGFloat finalAngle;
     CALayer *layer = nil;
     
+    // Depending on the combination of page to move (left - right) and whether
+    // the animation should move forward or back to the next of previous page
+    
     if (self.nextPageToShow == kNextPage) {
-        // Calculate the final angle for the next page
+        // Moving to next page AND 
         finalAngle = (self.lastAngle < -M_PI_2) ? -M_PI : 0.0f;
         self.currRightImageView.frame = CGRectMake(CGRectGetWidth(self.frame)/4, 0, CGRectGetWidth(kRectRightImage), CGRectGetHeight(kRectRightImage));
         layer = self.currRightImageView.layer;
@@ -312,6 +315,12 @@ typedef enum {
         self.currLeftImageView.frame = CGRectMake(CGRectGetWidth(self.frame)/4, 0, CGRectGetWidth(kRectRightImage), CGRectGetHeight(kRectRightImage));
         layer = self.currLeftImageView.layer;
         layer.anchorPoint = CGPointMake(1.0f, 0.5f);
+
+    } else if (self.nextPageToShow == kCurrentPage) {
+        finalAngle = (self.lastAngle < -M_PI_2) ? -M_PI : 0.0f;
+        self.currRightImageView.frame = CGRectMake(CGRectGetWidth(self.frame)/4, 0, CGRectGetWidth(kRectRightImage), CGRectGetHeight(kRectRightImage));
+        layer = self.currRightImageView.layer;
+        layer.anchorPoint = CGPointMake(0.0f, 0.5f);
     }
     
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
@@ -364,7 +373,7 @@ typedef enum {
             break;
             
         case kCurrentPage:
-            
+            [self addSubview:self.currView];
             break;
             
         case kPreviousPage:
