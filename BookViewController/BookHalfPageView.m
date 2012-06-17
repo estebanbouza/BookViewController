@@ -145,15 +145,13 @@ typedef enum {
 
 - (void)rotateView:(UIView *)view angle:(CGFloat)angle pageToMove:(t_pageToMove)pageToMove{
     CALayer *layer = view.layer;
-    CATransform3D transform;
+    CATransform3D transform = CATransform3DIdentity;
     
     if (pageToMove == kPageRight) {
-        transform = CATransform3DIdentity;
         transform = CATransform3DTranslate(transform, -CGRectGetWidth(self.frame) / 4.0f, 0, 0);
         transform = CATransform3DRotate(transform, angle, 0, 1, 0);
         transform = CATransform3DTranslate(transform, CGRectGetWidth(self.frame) / 4.0f, 0, 0);
     } else if (pageToMove == kPageLeft) {
-        transform = CATransform3DIdentity;
         transform = CATransform3DTranslate(transform, CGRectGetWidth(self.frame) / 4.0f, 0, 0);
         transform = CATransform3DRotate(transform, angle, 0, 1, 0);
         transform = CATransform3DTranslate(transform, -CGRectGetWidth(self.frame) / 4.0f, 0, 0);
@@ -292,7 +290,7 @@ typedef enum {
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    CGFloat finalAngle;
+    CGFloat finalAngle = 0.0f;
     CALayer *layer = nil;
     
     // Depending on the combination of page to move (left - right) and whether

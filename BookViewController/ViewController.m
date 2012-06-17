@@ -81,10 +81,9 @@
 //    button.frame = CGRectMake(90, 50, 200, 150);
 //    [views insertObject:buttonView atIndex:views.count/2/2];
     
-    self.bhpv = [[BookHalfPageView alloc] initWithFrame:CGRectMake(0, 0, kViewWidth, kViewHeight) views:views];
+    self.bhpv = [[[BookHalfPageView alloc] initWithFrame:CGRectMake(0, 0, kViewWidth, kViewHeight) views:views] autorelease];
     self.bhpv.center = CGPointMake(self.view.center.x, self.view.center.y + 200);
     [self.view addSubview:self.bhpv];
-    
     
     [views release];
 }

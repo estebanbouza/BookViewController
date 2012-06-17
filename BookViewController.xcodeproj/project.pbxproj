@@ -97,13 +97,12 @@
 		5B5558251524D2E6006336DC /* BookViewController */ = {
 			isa = PBXGroup;
 			children = (
+				5BB0E1AA158DE73E001A5E8D /* Libraries */,
 				5B55582E1524D2E7006336DC /* AppDelegate.h */,
 				5B55582F1524D2E7006336DC /* AppDelegate.m */,
 				5B5558311524D2E7006336DC /* ViewController.h */,
 				5B5558321524D2E8006336DC /* ViewController.m */,
 				5B5558341524D2E8006336DC /* ViewController.xib */,
-				5BFEF45E153A22EA00235C27 /* BookHalfPageView.h */,
-				5BFEF45F153A22EA00235C27 /* BookHalfPageView.m */,
 				5B5558261524D2E7006336DC /* Supporting Files */,
 			);
 			path = BookViewController;
@@ -118,6 +117,15 @@
 				5B55582D1524D2E7006336DC /* BookViewController-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5BB0E1AA158DE73E001A5E8D /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				5BFEF45E153A22EA00235C27 /* BookHalfPageView.h */,
+				5BFEF45F153A22EA00235C27 /* BookHalfPageView.m */,
+			);
+			name = Libraries;
 			sourceTree = "<group>";
 		};
 		5BF3DFBC1527AF3400774859 /* Resources */ = {
