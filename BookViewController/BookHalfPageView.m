@@ -198,7 +198,7 @@ typedef enum {
     self.xstart = [touch locationInView:self].x;
     
     // Decide which page to move based on the starting event.
-    self.pageToMove = self.xstart < CGRectGetWidth(self.frame)/2 ? kPageLeft : kPageRight;
+    self.pageToMove = (self.xstart < CGRectGetWidth(self.frame)/2) ? kPageLeft : kPageRight;
     
     // Store two half screenshots of the current view
     self.currLeftImage = [self imageForView:self.currView leftHalf:YES rotated:NO];
@@ -213,7 +213,7 @@ typedef enum {
     switch (self.pageToMove) {
         case kPageLeft:
             // Store the next image to show in the other side of the current page
-            self.nextImage = [self imageForView:self.prevView leftHalf:NO rotated:YES];
+            self.nextImage = (self.currPage == 0) ? nil : [self imageForView:self.prevView leftHalf:NO rotated:YES];
 
             // Insert the view below the current view
             [self insertSubview:self.prevView belowSubview:self.currView];
@@ -221,7 +221,7 @@ typedef enum {
             
         case kPageRight:
             // Store the next image to show in the other side of the current page
-            self.nextImage = [self imageForView:self.nextView leftHalf:YES rotated:YES];
+            self.nextImage = (self.currPage == self.views.count - 1) ? nil : [self imageForView:self.nextView leftHalf:YES rotated:YES];
             
             // Insert the view below the current view
             [self insertSubview:self.nextView belowSubview:self.currView];
@@ -256,6 +256,12 @@ typedef enum {
         // if we are moving the right page, set the right image view as the one to rotate
         viewToRotate = self.currRightImageView;
         
+        // If there are no more pages before this one, don't let the user
+        // move to the previous page page
+        if (self.currPage == self.views.count - 1) {
+            angle = angle / 4.0f;
+        }
+        
         // The first half of the movement will show the current page.
         // After the first half, the next page must be shown.
         if (angle < -M_PI_2 && self.nextPageToShow != kNextPage) {
@@ -274,7 +280,15 @@ typedef enum {
         
         // Moving to previous page
     } else if (self.pageToMove == kPageLeft) {
+        
         viewToRotate = self.currLeftImageView;
+        
+        // If there are no more pages before this one, don't let the user
+        // move to the previous page page
+        if (self.currPage == 0) {
+            angle = angle / 4.0f;
+        }
+        
         if (angle < M_PI_2 && self.nextPageToShow != kCurrentPage) {
             self.nextPageToShow = kCurrentPage;
             self.currLeftImageView.image = self.currLeftImage;        
@@ -292,7 +306,7 @@ typedef enum {
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     CGFloat finalAngle = 0.0f;
     CALayer *layer = nil;
-    
+        
     // Depending on the combination of page to move (left - right) and whether
     // the animation should move forward or back to the next of previous page
     
@@ -329,7 +343,11 @@ typedef enum {
     animation.delegate = self;
     
     [layer addAnimation:animation forKey:nil];
-    layer.transform = transformTo;    
+    layer.transform = transformTo;
+    
+    // Disable user interaction while the animation is running
+    self.userInteractionEnabled = NO;
+
 }
 
 
@@ -382,6 +400,9 @@ typedef enum {
     // Restart the next page to shown and the page to move
     self.nextPageToShow = kCurrentPage;
     self.pageToMove = kPageNone;
+    
+    // Restore user interaction after the animation finishes
+    self.userInteractionEnabled = YES;
     
 }
 
