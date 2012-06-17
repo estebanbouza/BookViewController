@@ -212,17 +212,12 @@ typedef enum {
     self.currLeftImageView.frame = kRectLeftImage;
     self.currRightImageView.frame = kRectRightImage;
     
-    UIImage *image;
-    UIImageView *imageView;
     switch (self.pageToMove) {
         case kPageLeft:
-            image = [self imageForView:self.prevView leftHalf:NO rotated:YES];
-            imageView = [[UIImageView alloc] initWithImage:image];
-            imageView.backgroundColor = [UIColor blueColor];
-            imageView.center = CGPointMake(self.superview.center.x , self.superview.center.y - 240);
-            
-            [self.superview addSubview:imageView];
-            self.nextImage = image;
+            // Store the next image to show in the other side of the current page
+            self.nextImage = [self imageForView:self.prevView leftHalf:NO rotated:YES];
+
+            // Insert the view below the current view
             [self insertSubview:self.prevView belowSubview:self.currView];
             break;
             
@@ -290,7 +285,7 @@ typedef enum {
             self.currLeftImageView.image = self.nextImage;
         }
     }
-    \
+    
     self.lastAngle = angle;
     
     [self rotateView:viewToRotate angle:angle pageToMove:self.pageToMove];

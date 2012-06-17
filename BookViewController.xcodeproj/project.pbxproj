@@ -15,7 +15,6 @@
 		5B5558301524D2E7006336DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B55582F1524D2E7006336DC /* AppDelegate.m */; };
 		5B5558331524D2E8006336DC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5558321524D2E8006336DC /* ViewController.m */; };
 		5B5558361524D2E8006336DC /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B5558341524D2E8006336DC /* ViewController.xib */; };
-		5B55583E1524D33C006336DC /* BookView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B55583D1524D33C006336DC /* BookView.m */; };
 		5B5558401524D961006336DC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B55583F1524D961006336DC /* QuartzCore.framework */; };
 		5BF3DFC41527AF6D00774859 /* img0.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF3DFBE1527AF6D00774859 /* img0.png */; };
 		5BF3DFC51527AF6D00774859 /* img1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF3DFBF1527AF6D00774859 /* img1.png */; };
@@ -23,8 +22,6 @@
 		5BF3DFC71527AF6D00774859 /* img3.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF3DFC11527AF6D00774859 /* img3.png */; };
 		5BF3DFC81527AF6D00774859 /* img4.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF3DFC21527AF6D00774859 /* img4.png */; };
 		5BF3DFC91527AF6D00774859 /* img5.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF3DFC31527AF6D00774859 /* img5.png */; };
-		5BF3DFD01527B86E00774859 /* BookDoublePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF3DFCF1527B86E00774859 /* BookDoublePageView.m */; };
-		5BFEF45B15377EAE00235C27 /* old_BookHalfPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFEF45A15377EAE00235C27 /* old_BookHalfPageView.m */; };
 		5BFEF460153A22EA00235C27 /* BookHalfPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFEF45F153A22EA00235C27 /* BookHalfPageView.m */; };
 /* End PBXBuildFile section */
 
@@ -42,8 +39,6 @@
 		5B5558311524D2E7006336DC /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		5B5558321524D2E8006336DC /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		5B5558351524D2E8006336DC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
-		5B55583C1524D33C006336DC /* BookView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookView.h; sourceTree = "<group>"; };
-		5B55583D1524D33C006336DC /* BookView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookView.m; sourceTree = "<group>"; };
 		5B55583F1524D961006336DC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5BF3DFBE1527AF6D00774859 /* img0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img0.png; sourceTree = "<group>"; };
 		5BF3DFBF1527AF6D00774859 /* img1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img1.png; sourceTree = "<group>"; };
@@ -51,10 +46,6 @@
 		5BF3DFC11527AF6D00774859 /* img3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img3.png; sourceTree = "<group>"; };
 		5BF3DFC21527AF6D00774859 /* img4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img4.png; sourceTree = "<group>"; };
 		5BF3DFC31527AF6D00774859 /* img5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img5.png; sourceTree = "<group>"; };
-		5BF3DFCE1527B86E00774859 /* BookDoublePageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDoublePageView.h; sourceTree = "<group>"; };
-		5BF3DFCF1527B86E00774859 /* BookDoublePageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookDoublePageView.m; sourceTree = "<group>"; };
-		5BFEF45915377EAE00235C27 /* old_BookHalfPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = old_BookHalfPageView.h; sourceTree = "<group>"; };
-		5BFEF45A15377EAE00235C27 /* old_BookHalfPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = old_BookHalfPageView.m; sourceTree = "<group>"; };
 		5BFEF45E153A22EA00235C27 /* BookHalfPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookHalfPageView.h; sourceTree = "<group>"; };
 		5BFEF45F153A22EA00235C27 /* BookHalfPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookHalfPageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,7 +104,6 @@
 				5B5558341524D2E8006336DC /* ViewController.xib */,
 				5BFEF45E153A22EA00235C27 /* BookHalfPageView.h */,
 				5BFEF45F153A22EA00235C27 /* BookHalfPageView.m */,
-				5BFEF45D153A22AE00235C27 /* old */,
 				5B5558261524D2E7006336DC /* Supporting Files */,
 			);
 			path = BookViewController;
@@ -142,19 +132,6 @@
 			);
 			name = Resources;
 			path = BookViewController/Resources;
-			sourceTree = "<group>";
-		};
-		5BFEF45D153A22AE00235C27 /* old */ = {
-			isa = PBXGroup;
-			children = (
-				5B55583C1524D33C006336DC /* BookView.h */,
-				5B55583D1524D33C006336DC /* BookView.m */,
-				5BF3DFCE1527B86E00774859 /* BookDoublePageView.h */,
-				5BF3DFCF1527B86E00774859 /* BookDoublePageView.m */,
-				5BFEF45915377EAE00235C27 /* old_BookHalfPageView.h */,
-				5BFEF45A15377EAE00235C27 /* old_BookHalfPageView.m */,
-			);
-			name = old;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,9 +205,6 @@
 				5B55582C1524D2E7006336DC /* main.m in Sources */,
 				5B5558301524D2E7006336DC /* AppDelegate.m in Sources */,
 				5B5558331524D2E8006336DC /* ViewController.m in Sources */,
-				5B55583E1524D33C006336DC /* BookView.m in Sources */,
-				5BF3DFD01527B86E00774859 /* BookDoublePageView.m in Sources */,
-				5BFEF45B15377EAE00235C27 /* old_BookHalfPageView.m in Sources */,
 				5BFEF460153A22EA00235C27 /* BookHalfPageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

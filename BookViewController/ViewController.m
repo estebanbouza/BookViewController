@@ -7,8 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "BookView.h"
-#import "BookDoublePageView.h"
 #import "BookHalfPageView.h"
 
 #define kViewWidth 400
@@ -16,15 +14,13 @@
 
 @interface ViewController ()
 
-@property (nonatomic, retain) BookView *bookView;
-@property (nonatomic, retain) BookDoublePageView *bookDoublePageView;
+@property (nonatomic, retain) BookHalfPageView *bhpv;
 
 @end
 
 @implementation ViewController
 
-@synthesize bookView = _bookView;
-@synthesize bookDoublePageView;
+@synthesize bhpv = _bhpv;
 
 - (void)viewDidLoad
 {
@@ -42,14 +38,8 @@
         [views addObject:imgview];
         [imgview release];
     }
-    
-    self.bookView = [[[BookView alloc] initWithFrame:CGRectMake(0, 0, kViewWidth, kViewHeight) views:views] autorelease];
-    self.bookView.center = CGPointMake(self.view.center.x, self.view.center.y - 200);
-    [self.view addSubview:self.bookView];
-    
+        
     [views release];
-    
-
     
     views = [[NSMutableArray alloc] init];
     for (int i = 0; i < 6; i++) {
@@ -91,9 +81,9 @@
 //    button.frame = CGRectMake(90, 50, 200, 150);
 //    [views insertObject:buttonView atIndex:views.count/2/2];
     
-    BookHalfPageView *bhpv = [[BookHalfPageView alloc] initWithFrame:CGRectMake(0, 0, kViewWidth, kViewHeight) views:views];
-    bhpv.center = CGPointMake(self.view.center.x, self.view.center.y + 200);
-    [self.view addSubview:bhpv];
+    self.bhpv = [[BookHalfPageView alloc] initWithFrame:CGRectMake(0, 0, kViewWidth, kViewHeight) views:views];
+    self.bhpv.center = CGPointMake(self.view.center.x, self.view.center.y + 200);
+    [self.view addSubview:self.bhpv];
     
     
     [views release];
